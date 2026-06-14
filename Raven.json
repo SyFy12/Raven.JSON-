@@ -1,0 +1,40 @@
+package.json
+{
+  "name": "my-json-server",
+  "version": "1.0.0",
+  "description": "A simple JSON API hosted on Render",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
+server.js
+const express = require('express');
+const app = express();
+
+// Render sets the port automatically, or defaults to 3000 locally
+const PORT = process.env.PORT || 3000;
+
+// Allow the server to parse incoming JSON data
+app.use(express.json());
+
+// This is the data your server will send back
+const defaultProfile = {
+  username: "GitHubCoder",
+  status: "Server is Live!",
+  devicesConnected: ["iPad 2", "Laptop"],
+  lastUpdated: new Date().toLocaleDateString()
+};
+
+// When you visit the main URL, send the JSON data
+app.get('/', (req, res) => {
+  res.json(defaultProfile);
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
